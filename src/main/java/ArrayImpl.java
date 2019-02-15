@@ -1,12 +1,12 @@
 import java.util.Arrays;
 
-public class ArrayImpl<E> implements Array<E> {
+public class ArrayImpl<E extends Object & Comparable<? super  E>> implements Array<E> {
 
     private static final int DEFAULT_CAPACITY = 16;
-    private static final int INVALID_INDEX = -1;
+    protected static final int INVALID_INDEX = -1;
 
-    private E[] data;
-    private int currentSize;
+    protected E[] data;
+    protected int currentSize;
 
     public ArrayImpl() {
         this(DEFAULT_CAPACITY);
@@ -22,7 +22,7 @@ public class ArrayImpl<E> implements Array<E> {
         this.data[currentSize++] = value;
     }
 
-    private void checkGrow() { //проверяем достаточно ли места в массиве и если нет увеличивем в 2 раза
+    protected void checkGrow() { //проверяем достаточно ли места в массиве и если нет увеличивем в 2 раза
         if (currentSize<data.length)
             return;
 
@@ -80,4 +80,68 @@ public class ArrayImpl<E> implements Array<E> {
     public boolean isEmpty() {
         return currentSize == 0;
     }
+
+    @Override
+    public void sortBubble() {
+        for (int i = 0; i < currentSize - 1 ; i++) {
+            for (int j = 0; j < currentSize - 1 - i; j++) {
+                if (data[j].compareTo(data[j + 1]) > 0) {
+                    exchange( j , j + 1);
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public void sortSelect() {
+        for (int i = 0; i < currentSize - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < currentSize; j++) {
+                if (data[j].compareTo(data[minIndex]) < 0) {
+                    minIndex = j;
+                }
+            }
+            exchange(minIndex,i);
+        }
+    }
+
+    @Override
+    public void sortInsert() {
+        for (int i = 0; i < currentSize; i++) {
+            E temp = data[i];
+
+            int in = i;
+            while(in > 0 && data[in - 1].compareTo(temp) >= 0) {
+                data[in] = data[in - 1];
+                in--;
+            }
+            data[in] = temp;
+        }
+    }
+
+    private void exchange(int index1, int index2) {
+        E temp = data[index1];
+        data[index1] = data[index2];
+        data[index2] = temp;
+    }
+
+
+    public static void main(String[] args) {
+        int n,arr[];
+        n = 15;
+
+        arr = new int [n];
+        for (int i=0;i<arr.length;i++)
+            arr[i] = (int) ( Math.random() * n);
+        for (int i: arr)
+            System.out.print( i + " " );
+
+
+        long start = System.currentTimeMillis();
+
+        long finish = System.currentTimeMillis();
+        System.out.println(finish - start);
+    }
+
 }

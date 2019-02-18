@@ -172,16 +172,16 @@ public class ArrayImplTestCase {
 
     @Test
     public void time_test_bubble(){
-        int n = 100000;
+        int n = 10000;
         ArrayImpl<Integer> arr  = new ArrayImpl<>(n);
 
         for (int i=0;i<n;i++)
-            arr.add((int)Math.random() * n);
+            arr.add((int) (Math.random() * n));
 
         long start = System.currentTimeMillis();
-        //arr.sortBubble();// 6 секунд на 100000 элементов
-        arr.sortSelect();//5 секунд на 100000 эелементов
-        //arr.sortInsert();// 7 секунд на 100000 элементов
+        //arr.sortBubble();// 630 на 100000 элементов
+        //arr.sortSelect();//220 на 100000 эелементов
+        arr.sortInsert();// 110 на 100000 элементов
         long finish = System.currentTimeMillis();
         System.out.println(finish - start);
     }

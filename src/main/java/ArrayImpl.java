@@ -112,7 +112,7 @@ public class ArrayImpl<E extends Object & Comparable<? super  E>> implements Arr
             E temp = data[i];
 
             int in = i;
-            while(in > 0 && data[in - 1].compareTo(temp) >= 0) {
+            while(in > 0 && data[in - 1].compareTo(temp) > 0) {
                 data[in] = data[in - 1];
                 in--;
             }
